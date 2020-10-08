@@ -1,16 +1,10 @@
-include(vcpkg_common_functions)
-
-vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
-
-if(NOT VCPKG_CRT_LINKAGE STREQUAL "dynamic")
-    message(FATAL_ERROR "DirectXTex only supports dynamic CRT linkage")
-endif()
+vcpkg_check_linkage(ONLY_STATIC_LIBRARY ONLY_DYNAMIC_CRT)
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO Microsoft/DirectXTex
-    REF dec2019
-    SHA512 b0c7fdeb2f035186eddeb543cd16813c6807b9646367cd309082bd164ab484001dee912249d5570e3ddf5abb90cb3e7c0355a3c18c2e2bd2a051292b65a293f6
+    REF sept2020
+    SHA512 f6b5b07817c05c64a5281b0006b182f2ebd110d79f10332801b51a185486fd7426e18c454e66995e9f88c92d7b8cf0c03ae590aa040d92314bdd3d4989784156
     HEAD_REF master
 )
 
@@ -42,7 +36,7 @@ endif()
 
 vcpkg_build_msbuild(
     PROJECT_PATH ${SOURCE_PATH}/DirectXTex_${SLN_NAME}.sln
-    PLATFORM ${BUILD_ARCH}
+    PLATFORM ${TRIPLET_SYSTEM_ARCH}
 )
 
 file(INSTALL
